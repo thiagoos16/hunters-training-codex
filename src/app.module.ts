@@ -3,6 +3,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ConfigModule } from '@nestjs/config';
 import { envSchema } from './config/env.validation';
+import { HunterModule } from './hunter/hunter.module';
 
 @Module({
   imports: [
@@ -16,7 +17,8 @@ import { envSchema } from './config/env.validation';
         }
         return parsed.data;
       }
-    })
+    }),
+    HunterModule
   ],
   controllers: [AppController],
   providers: [AppService],
