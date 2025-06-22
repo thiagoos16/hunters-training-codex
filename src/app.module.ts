@@ -1,9 +1,10 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { ConfigModule } from '@nestjs/config';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import { envSchema } from './config/env.validation';
 import { HunterModule } from './hunter/hunter.module';
+import { MongooseModule } from '@nestjs/mongoose';
 
 @Module({
   imports: [
@@ -18,9 +19,17 @@ import { HunterModule } from './hunter/hunter.module';
         return parsed.data;
       }
     }),
+    MongooseModule.forRootAsync({
+      useFactory: () => {
+        return {
+          uri: process.env.DATABASE_URL,
+        }
+      },
+    }),
     HunterModule
   ],
   controllers: [AppController],
   providers: [AppService],
 })
+
 export class AppModule {}

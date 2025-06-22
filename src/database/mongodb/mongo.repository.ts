@@ -6,6 +6,7 @@ export abstract class MongoRepository<T> implements IRepository<T> {
 
     async create(data: T): Promise<T> {
         const result = new this.model(data);
+        await result.save();
         return result.toObject() as T;
     }
 
